@@ -1,0 +1,138 @@
+.topBar {
+  height: 120px;
+  width: 100dvw;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.logo {
+  margin-left: 2em;
+  margin-right: 1em;
+}
+
+.searchSection {
+  height: 100%;
+  width: 60%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search {
+  position: relative;
+  height: 3.5em;
+  width: 100%;
+  border-radius: 20px;
+  background: #eeeeee;
+  margin: 0 0.5em;
+  padding-left: 16px;
+}
+
+.searchIcon {
+  position: absolute;
+  right: 12px;
+}
+
+.search::placeholder {
+  color: #999999;
+  font-family: "Pretendard";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.buttonSection {
+  height: 100%;
+  width: calc(150px + 2em);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.navContent {
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0px 4px 8px 3px rgba(221, 221, 221, 0.5);
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 75px;
+  width: 75px;
+  margin: 0 0.5em;
+  &.active {
+    border-radius: 20px;
+    background: #5151be;
+    box-shadow: 0px 4px 8px 3px rgba(221, 221, 221, 0.5);
+  }
+}
+
+.portfolioInProgressDescription {
+  font-family: "Pretendard";
+  font-weight: 600;
+  font-size: 11px;
+  text-wrap: wrap;
+  text-align: center;
+  color: #000000;
+  text-decoration: none;
+  margin: 4px 0 0 0;
+  &.active {
+    color: #ffffff;
+  }
+}
+
+.myPageDescription {
+  font-family: "Pretendard";
+  font-weight: 600;
+  font-size: 14px;
+  text-wrap: wrap;
+  text-align: center;
+  color: #000000;
+  text-decoration: none;
+  margin: 4px 0 0 0;
+  &.active {
+    color: #ffffff;
+  }
+}
+
+.connectWallet {
+  height: 3em;
+  width: 8em;
+  border-radius: 20px;
+  background: #16166d;
+  box-shadow: 0px 4px 8px 3px rgba(221, 221, 221, 0.5);
+  color: #fff;
+  text-align: center;
+  font-family: "Pretendard";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin: 0 2em 0 0.5em;
+  border: 0;
+}
+
+.footer {
+  background: #ffffff;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  border-top: 1px solid #dddddd;
+}
+
+.content {
+  font-family: "Pretendard";
+  font-size: 14px;
+  text-align: center;
+  color: #dddddd;
+  margin: 3px;
+}

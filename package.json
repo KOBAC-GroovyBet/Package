@@ -1,0 +1,33 @@
+{
+  "name": "kobac-groovybet",
+  "version": "1.0.0",
+  "description": "groovybet",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "dev": "concurrently \"npm:dev:api\" \"npm:dev:client\"",
+    "dev:api": "cd apps/api && npm run start",
+    "dev:client": "cd apps/client && npm run dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KOBAC-GroovyBet/Package.git"
+  },
+  "keywords": [
+    "groovybet"
+  ],
+  "author": "wook",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KOBAC-GroovyBet/Package/issues"
+  },
+  "homepage": "https://github.com/KOBAC-GroovyBet/Package#readme",
+  "dependencies": {
+    "@web3auth/modal": "^9.5.2",
+    "concurrently": "^9.1.2"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox-viem": "^3.0.0",
+    "hardhat": "^2.22.17"
+  }
+}

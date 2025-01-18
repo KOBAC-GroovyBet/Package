@@ -1,0 +1,65 @@
+$wid: calc(100% - 20px);
+
+.container {
+  height: 40%;
+  width: calc(100% - 20px);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 20px;
+}
+
+.amountSection {
+  width: 30%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.minus {
+  border: 0;
+  border-radius: 10px;
+  background: #d9d9d9;
+  width: 32px;
+  height: 32px;
+  font-family: "Pretendard";
+  font-weight: 800;
+  font-size: 12px;
+}
+
+.plus {
+  border: 0;
+  border-radius: 10px;
+  background: #d9d9d9;
+  width: 32px;
+  height: 32px;
+  font-family: "Pretendard";
+  font-weight: 800;
+  font-size: 12px;
+}
+
+.amount {
+  width: 40px;
+  text-align: center;
+  margin: 0 8%;
+  font-family: "Pretendard";
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.addCart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+  height: 30%;
+  border-radius: 20px;
+  background: #16166d;
+  font-family: "Pretendard";
+  font-weight: 600;
+  font-size: 20px;
+  color: #ffffff;
+  padding: 1em 1em;
+}

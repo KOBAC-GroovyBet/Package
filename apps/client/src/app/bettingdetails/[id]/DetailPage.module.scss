@@ -1,0 +1,99 @@
+$pageheight: calc(100dvh - 182px);
+
+.pageContainer {
+  min-height: $pageheight;
+}
+
+.menuSection {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+  font-family: "Pretendard";
+  width: 100%;
+  height: 80px;
+}
+
+.titleContainer {
+  height: 100%;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  width: 60%;
+  margin-left: 20px;
+  font-family: "Pretendard";
+  font-size: 24px;
+  font-weight: 600;
+  text-wrap: wrap;
+}
+
+.connectWallet {
+  height: 60%;
+  width: calc(40% - 20px);
+  margin: 0 20px;
+  border-radius: 20px;
+  border: 2px solid #16166d;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: "Pretendard";
+  font-weight: 600;
+  font-size: 15px;
+  color: #bbbbbb;
+}
+
+.content {
+  width: 100%;
+  height: calc($pageheight - 100px);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.imageSection {
+  width: 50%;
+  height: calc($pageheight - 100px);
+  margin-left: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #dddddd;
+  width: 100%;
+  height: 50%;
+  border-radius: 20px;
+}
+
+.details {
+  width: calc(100% - 40px);
+  margin: 5px 20px 10px 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.volume {
+  font-family: "Pretendard";
+  font-weight: 500;
+  color: #bbbbbb;
+  font-size: 14px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.selectSection {
+  width: 50%;
+  height: calc($pageheight - 100px);
+  margin-right: 20px;
+  margin-bottom: 20px;
+}

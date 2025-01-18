@@ -7,7 +7,7 @@ import s from "./layout.module.scss"; // 스타일링 파일
 
 export default function ConnectWallet() {
   const { account, setAccount } = useWallet();
-  const clientId = ""; // Web3Auth 대시보드에서 발급받은 Client ID
+  const clientId = "BLjtLImOLWbFBpbVDYkCQ0BWbPN7ZOFTVyMLSgXPHY03S39jnov4Ga7eR1KJSdX62ZRyhLy5nfHVkhO3I6h8aJc"; // Web3Auth 대시보드에서 발급받은 Client ID
 
   const connectWallet = async () => {
     try {

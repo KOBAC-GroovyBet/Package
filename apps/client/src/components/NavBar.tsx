@@ -7,10 +7,12 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { Web3Auth, Web3AuthOptions } from "@web3auth/modal";
-import { CHAIN_NAMESPACES, WEB3AUTH_NETWORK } from "@web3auth/base";
+import { CHAIN_NAMESPACES, IAdapter, IProvider, WEB3AUTH_NETWORK } from "@web3auth/base";
 import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
 import { getDefaultExternalAdapters } from "@web3auth/default-evm-adapter";
-import { IProvider, IAdapter } from "@web3auth/base";
+
+import RPC from "./ethersRPC" ;
+
 
 const clientId = "BORLcg7MniYpQ8QT4cJdMHYfJAvmi_TbaAZbP4WYvCW_cnG9MhUs5SSPXnjiX1MAQvTZT4jVUkzToPCIsTFK-L8";
 
@@ -37,27 +39,22 @@ const web3AuthOptions: Web3AuthOptions = {
 
 const web3auth = new Web3Auth(web3AuthOptions);
 
-export default function Navbar() {
-  const pathName = usePathname();
 
+export default function Navbar() {
   const [provider, setProvider] = useState<IProvider | null>(null);
   const [loggedIn, setLoggedIn] = useState(false);
+  const pathName = usePathname();
 
   useEffect(() => {
     const init = async () => {
       try {
-        const adapters = await getDefaultExternalAdapters({ options: web3AuthOptions });
-        adapters.forEach((adapter: IAdapter<unknown>) => {
-          web3auth.configureAdapter(adapter);
-        });
         await web3auth.initModal();
-        setProvider(web3auth.provider);
-
         if (web3auth.connected) {
+          setProvider(web3auth.provider);
           setLoggedIn(true);
         }
       } catch (error) {
-        console.error("Initialization error:", error);
+        console.error(error);
       }
     };
 
@@ -68,17 +65,10 @@ export default function Navbar() {
     try {
       const web3authProvider = await web3auth.connect();
       setProvider(web3authProvider);
-      if (web3auth.connected) {
-        setLoggedIn(true);
-      }
+      setLoggedIn(true);
     } catch (error) {
-      console.error("Login error:", error);
+      console.error("Login failed:", error);
     }
-  };
-
-  const getUserInfo = async() => {
-    const user = await web3auth.getUserInfo();
-    uiConsole(user);
   };
 
   const logout = async () => {
@@ -86,20 +76,13 @@ export default function Navbar() {
       await web3auth.logout();
       setProvider(null);
       setLoggedIn(false);
-      uiConsole("logged out");
     } catch (error) {
-      console.error("Logout error:", error);
+      console.error("Logout failed:", error);
     }
   };
 
-  function uiConsole(...args: any[]): void {
-    const el = document.querySelector("#console>p");
-    if (el) {
-      el.innerHTML = JSON.stringify(args || {}, null, 2);
-      console.log(...args);
-    }
-   
-  }
+  
+  
 
   return (
     <nav className={s.topBar}>
@@ -124,64 +107,37 @@ export default function Navbar() {
       </div>
       <div className={s.buttonSection}>
         <Link
-          className={`${s.navContent} ${pathName.includes("temporaryportfolio") ? s.active : ""}`}
+          className={`${s.navContent} ${
+            pathName.includes("temporaryportfolio") ? s.active : ""
+          }`}
           href={"/temporaryportfolio"}
         >
-          {pathName.includes("temporaryportfolio") ? (
-            <Image
-              src={"/portfolioInProgressSelected.svg"}
-              height={28}
-              width={28}
-              alt="icon"
-            />
-          ) : (
-            <Image
-              src={"/portfolioInProgress.svg"}
-              height={28}
-              width={28}
-              alt="icon"
-            />
-          )}
-          <p
-            className={`${s.portfolioInProgressDescription} ${
-              pathName.includes("temporaryportfolio") ? s.active : ""
-            }`}
-          >
-            Temporary Portfolio
-          </p>
+          Temporary Portfolio
         </Link>
         <Link
-          className={`${s.navContent} ${pathName.includes("mypage") ? s.active : ""}`}
+          className={`${s.navContent} ${
+            pathName.includes("mypage") ? s.active : ""
+          }`}
           href={"/mypage"}
         >
-          {pathName.includes("mypage") ? (
-            <Image
-              src={"/myStatisticsSelected.svg"}
-              height={28}
-              width={28}
-              alt="icon"
-            />
-          ) : (
-            <Image
-              src={"/myStatistics.svg"}
-              height={28}
-              width={28}
-              alt="icon"
-            />
-          )}
-          <p
-            className={`${s.myPageDescription} ${pathName.includes("mypage") ? s.active : ""}`}
-          >
-            My Page
-          </p>
+          My Page
         </Link>
       </div>
-      <button
-        className={s.connectWallet}
-        onClick={loggedIn ? logout : login}
-      >
-        {loggedIn ? "Logout" : "Connect Wallet"}
-      </button>
+
+      {/* 로그인 상태에 따라 다른 버튼 렌더링 */}
+      {loggedIn ? (
+        <>
+         
+          
+          <button onClick={logout} className={s.connectWallet}>
+            Logout
+          </button>
+        </>
+      ) : (
+        <button onClick={login} className={s.connectWallet}>
+          Connect Wallet
+        </button>
+      )}
     </nav>
   );
 }

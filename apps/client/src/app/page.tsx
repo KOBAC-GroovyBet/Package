@@ -6,42 +6,69 @@ import Category from "@/components/Category/Category";
 import Image from "next/image";
 import Link from "next/link";
 import { mainPage, MainPageDatas } from "@/mock/pageData";
-import { useWallet } from "@/components/walletcontext";
+import RPC from "@/components/ethersRPC"; // RPC import 추가
+import { Web3Auth } from "@web3auth/modal";
+import { WEB3AUTH_NETWORK, CHAIN_NAMESPACES } from "@web3auth/base";
+import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
+
+
 
 export type SortType = "Top" | "Trending" | "New" | "All";
 
 export default function Home() {
   const [selected, setSelected] = useState<SortType>("Top");
   const [data, setData] = useState<MainPageDatas>();
-
-  // Wallet 상태 가져오기
-  const { account } = useWallet();
+  const [walletAddress, setWalletAddress] = useState<string | null>(null);
 
   useEffect(() => {
     setData(mainPage);
+
+    // Web3Auth 초기화 및 상태 복구
+    const chainConfig = {
+      chainNamespace: CHAIN_NAMESPACES.EIP155,
+      chainId: "0x1",
+      rpcTarget: "https://rpc.ankr.com/eth",
+      displayName: "Ethereum Mainnet",
+      blockExplorerUrl: "https://etherscan.io",
+      ticker: "ETH",
+      tickerName: "Ethereum",
+      logo: "https://cryptologos.cc/logos/ethereum-eth-logo.png",
+    };
+
+    const privateKeyProvider = new EthereumPrivateKeyProvider({
+      config: { chainConfig },
+    });
+    
+    const checkWalletStatus = async () => {
+      const web3auth = new Web3Auth({
+        clientId: "BORLcg7MniYpQ8QT4cJdMHYfJAvmi_TbaAZbP4WYvCW_cnG9MhUs5SSPXnjiX1MAQvTZT4jVUkzToPCIsTFK-L8", // Web3Auth Client ID
+        web3AuthNetwork: WEB3AUTH_NETWORK.SAPPHIRE_DEVNET,
+        privateKeyProvider,
+      });
+
+      await web3auth.initModal();
+
+      if (web3auth.connected) {
+        const provider = web3auth.provider;
+        if (provider) {
+          const accounts = await RPC.getAccounts(provider);
+          setWalletAddress(accounts[0]); // 지갑 주소 설정
+        }
+      }
+    };
+
+    checkWalletStatus();
   }, []);
 
-  const selectAll = () => {
-    setSelected("All");
-  };
-
-  const selectTop = () => {
-    setSelected("Top");
-  };
-
-  const selectNew = () => {
-    setSelected("New");
-  };
-
-  const selectTrending = () => {
-    setSelected("Trending");
-  };
+  const selectAll = () => setSelected("All");
+  const selectTop = () => setSelected("Top");
+  const selectNew = () => setSelected("New");
+  const selectTrending = () => setSelected("Trending");
 
   console.log(selected);
 
   return (
     <div className={s.mainPage}>
-      {/* 카테고리 섹션 */}
       <div className={s.menuSection}>
         <div className={s.menuContainer}>
           <Category category="Top" selected={selected} onClick={selectTop} />
@@ -54,19 +81,14 @@ export default function Home() {
           <Category category="All" selected={selected} onClick={selectAll} />
         </div>
 
-        {/* 지갑 상태 메시지 섹션 */}
-        <div className={s.walletInfo}>
-          {account ? (
-            <p className={s.connectedMessage}>
-              Welcome, <strong>{account.slice(0, 6)}...{account.slice(-4)}</strong>
-            </p>
-          ) : (
-            <p className={s.disconnectedMessage}>Please Connect Your Wallet First!</p>
-          )}
+        {/* 지갑 상태에 따라 동적 메시지 표시 */}
+        <div className={s.connectWallet}>
+          {walletAddress
+            ? `Hello, ${walletAddress}`
+            : "Please Connect Your Wallet First!"}
         </div>
       </div>
 
-      {/* 콘텐츠 섹션 */}
       <div className={s.contentSection}>
         {data ? (
           data.map((item) => (

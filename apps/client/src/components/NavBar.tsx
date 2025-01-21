@@ -41,7 +41,7 @@ const web3auth = new Web3Auth(web3AuthOptions);
 
 
 export default function Navbar() {
-  const {setWalletAddress} = useWallet();
+  const {walletAddress, setWalletAddress}= useWallet();
   const [provider, setProvider] = useState<IProvider | null>(null);
   const [loggedIn, setLoggedIn] = useState(false);
   const pathName = usePathname();
@@ -56,7 +56,8 @@ export default function Navbar() {
       const accounts = await RPC.getAccounts(provider);
       console.log("Fetched Accounts:", accounts); // 디버깅용
       if (accounts && accounts.length > 0) {
-        setWalletAddress(accounts[0]); // 지갑 주소 설정
+        setWalletAddress(accounts); // 지갑 주소 설정
+        console.log("Set Wallet Address:", accounts);
       } else {
         console.error("No accounts found.");
       }
@@ -89,6 +90,11 @@ export default function Navbar() {
 
     init();
   }, [setWalletAddress]);
+
+  useEffect(() => {
+    console.log("Updated Wallet Address:", walletAddress);
+  }, [walletAddress]);
+
 
 
   

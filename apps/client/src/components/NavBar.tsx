@@ -10,8 +10,8 @@ import { Web3Auth, Web3AuthOptions } from "@web3auth/modal";
 import { CHAIN_NAMESPACES, IAdapter, IProvider, WEB3AUTH_NETWORK } from "@web3auth/base";
 import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
 import { getInjectedAdapters } from "@web3auth/default-evm-adapter";
-import RPC from "./ethersRPC" ;
-import {useWallet} from "@/app/walletcontext";
+import RPC from "./ethersRPC";
+import { useWallet } from "@/app/walletcontext";
 
 
 const clientId = "BORLcg7MniYpQ8QT4cJdMHYfJAvmi_TbaAZbP4WYvCW_cnG9MhUs5SSPXnjiX1MAQvTZT4jVUkzToPCIsTFK-L8";
@@ -41,7 +41,7 @@ const web3auth = new Web3Auth(web3AuthOptions);
 
 
 export default function Navbar() {
-  const {walletAddress, setWalletAddress}= useWallet();
+  const { walletAddress, setWalletAddress } = useWallet();
   const [provider, setProvider] = useState<IProvider | null>(null);
   const [loggedIn, setLoggedIn] = useState(false);
   const pathName = usePathname();
@@ -51,7 +51,7 @@ export default function Navbar() {
       console.error("Provider is null or undefined.");
       return;
     }
-  
+
     try {
       const accounts = await RPC.getAccounts(provider);
       console.log("Fetched Accounts:", accounts); // 디버깅용
@@ -65,7 +65,7 @@ export default function Navbar() {
       console.error("Failed to fetch wallet address:", error);
     }
   };
-  
+
 
 
   useEffect(() => {
@@ -76,7 +76,7 @@ export default function Navbar() {
           web3auth.configureAdapter(adapter);
         });
         await web3auth.initModal();
-        
+
 
         if (web3auth.connected) {
           setProvider(web3auth.provider);
@@ -97,18 +97,18 @@ export default function Navbar() {
 
 
 
-  
+
 
   const login = async () => {
     try {
-     if(!web3auth.connected){
-      const web3authProvider = await web3auth.connect();
-      setProvider(web3authProvider);
-      setLoggedIn(true);
-      await fetchWalletAddress(web3authProvider);  
-    }else{console.log("Already connected");} 
-    
-   }catch (error) {
+      if (!web3auth.connected) {
+        const web3authProvider = await web3auth.connect();
+        setProvider(web3authProvider);
+        setLoggedIn(true);
+        await fetchWalletAddress(web3authProvider);
+      } else { console.log("Already connected"); }
+
+    } catch (error) {
       console.error("Login failed:", error);
     }
   };
@@ -124,8 +124,8 @@ export default function Navbar() {
     }
   };
 
-  
-  
+
+
 
   return (
     <nav className={s.topBar}>
@@ -150,28 +150,67 @@ export default function Navbar() {
       </div>
       <div className={s.buttonSection}>
         <Link
-          className={`${s.navContent} ${
-            pathName.includes("temporaryportfolio") ? s.active : ""
-          }`}
+          className={`${s.navContent} ${pathName.includes("temporaryportfolio") ? s.active : ""
+            }`}
           href={"/temporaryportfolio"}
         >
-          Temporary Portfolio
+          {" "}
+          {pathName.includes("temporaryportfolio") ? (
+            <Image
+              src={"/portfolioInProgressSelected.svg"}
+              height={28}
+              width={28}
+              alt="icon"
+            />
+          ) : (
+            <Image
+              src={"/portfolioInProgress.svg"}
+              height={28}
+              width={28}
+              alt="icon"
+            />
+          )}
+          <p
+            className={`${s.portfolioInProgressDescription} ${pathName.includes("temporaryportfolio") ? s.active : ""
+              }`}
+          >
+            Temporary Portfolio
+          </p>
         </Link>
         <Link
-          className={`${s.navContent} ${
-            pathName.includes("mypage") ? s.active : ""
-          }`}
+          className={`${s.navContent} ${pathName.includes("mypage") ? s.active : ""
+            }`}
           href={"/mypage"}
         >
-          My Page
+          {pathName.includes("mypage") ? (
+            <Image
+              src={"/myStatisticsSelected.svg"}
+              height={28}
+              width={28}
+              alt="icon"
+            />
+          ) : (
+            <Image
+              src={"/myStatistics.svg"}
+              height={28}
+              width={28}
+              alt="icon"
+            />
+          )}
+          <p
+            className={`${s.myPageDescription} ${pathName.includes("mypage") ? s.active : ""
+              }`}
+          >
+            My Page
+          </p>
         </Link>
       </div>
 
       {/* 로그인 상태에 따라 다른 버튼 렌더링 */}
       {loggedIn ? (
         <>
-         
-          
+
+
           <button onClick={logout} className={s.connectWallet}>
             Logout
           </button>

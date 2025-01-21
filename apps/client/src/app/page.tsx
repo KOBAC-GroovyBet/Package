@@ -12,7 +12,7 @@ export type SortType = "Top" | "Trending" | "New" | "All";
 export default function Home() {
   const [selected, setSelected] = useState<SortType>("Top");
   const [data, setData] = useState<MainPageDatas>();
-  const {walletAddress} = useWallet();
+  const { walletAddress } = useWallet();
 
   useEffect(() => {
     setData(mainPage);
@@ -49,7 +49,7 @@ export default function Home() {
           <Category category="All" selected={selected} onClick={selectAll} />
         </div>
         <div className={s.connectWallet}>
-          {walletAddress? `Hello, ${walletAddress}` : "Please Connect Your Wallet First!"}</div>
+          {walletAddress ? `Hello, ${walletAddress}` : "Please Connect Your Wallet First!"}</div>
       </div>
 
       <div className={s.contentSection}>
@@ -60,7 +60,14 @@ export default function Home() {
               href={`/bettingdetails/${item.id}`}
               key={item.id}
             >
-              <div className={s.imageSection}>image</div>
+              <div className={s.imageSection}>
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  fill
+                  style={{ borderTopLeftRadius: "20px", borderTopRightRadius: "20px" }}
+                />
+              </div>
               <h3 className={s.title}>{item.title}</h3>
               <div className={s.boxTail}>
                 <div className={s.activePart}>

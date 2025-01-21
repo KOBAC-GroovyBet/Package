@@ -7,20 +7,19 @@ $pageheight: calc(100dvh - 182px);
 .menuSection {
   display: flex;
   flex-direction: row;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
   font-family: "Pretendard";
-  width: 100%;
+  width: 90%;
   height: 80px;
+  margin: 0 auto;
 }
 
 .titleContainer {
   height: 100%;
   display: flex;
-  justify-content: left;
-  align-items: end;
-  width: 60%;
-  margin-left: 20px;
+  justify-content: center;
+  align-items: center;
   font-family: "Pretendard";
   font-size: 24px;
   font-weight: 600;
@@ -44,9 +43,8 @@ $pageheight: calc(100dvh - 182px);
 }
 
 .connectWallet {
-  height: 60%;
+  height: 40%;
   width: calc(40% - 20px);
-  margin: 0 20px;
   border-radius: 20px;
   border: 2px solid #16166d;
   background: #fff;
@@ -67,6 +65,7 @@ $pageheight: calc(100dvh - 182px);
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin: 0 auto;
 }
 
 .detailSection {

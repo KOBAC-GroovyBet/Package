@@ -1,6 +1,7 @@
 # KOBAC-GroovyBet
 
-KOBAC BlockChain Valley team E
+### KOBAC BlockChain Valley team E
+
 Risk 관리가 가능한 이슈 베팅 시스템, GroovyBet 입니다.
 
 ------------------------------------------------------------------------------------------
